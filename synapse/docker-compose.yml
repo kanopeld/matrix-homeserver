@@ -1,0 +1,103 @@
+version: "3.3"
+
+services:
+    proxy:
+        image: "jwilder/nginx-proxy"
+        container_name: "proxy"
+        volumes:
+            - "certs:/etc/nginx/certs"
+            - "vhost:/etc/nginx/vhost.d"
+            - "html:/usr/share/nginx/html"
+            - "/run/docker.sock:/tmp/docker.sock:ro"
+        networks: ["server"]
+        restart: "always"
+        ports:
+            - "80:80"
+            - "443:443"
+
+    letsencrypt:
+        image: "jrcs/letsencrypt-nginx-proxy-companion"
+        container_name: "letsencrypt"
+        volumes:
+            - "certs:/etc/nginx/certs"
+            - "vhost:/etc/nginx/vhost.d"
+            - "html:/usr/share/nginx/html"
+            - "/run/docker.sock:/var/run/docker.sock:ro"
+        environment:
+            NGINX_PROXY_CONTAINER: "proxy"
+        networks: ["server"]
+        restart: "always"
+        depends_on: ["proxy"]
+
+    postgresql:
+        image: postgres:latest
+        restart: always
+        env_file: .env
+        ports:
+            - "5432:5432"
+        volumes:
+            - "postgresdata:/var/lib/postgresql/"
+        networks: ["server"]
+
+    synapse:
+        image: "matrixdotorg/synapse:latest"
+        container_name: "synapse"
+        volumes:
+            - "./synapse:/data"
+            - "./data/media_store:/media"
+            - "./data/logs:/logs"
+        env_file: .env
+        networks: ["server"]
+        depends_on:
+            - postgresql
+            - proxy
+            - letsencrypt
+        
+    telegram-bridge:
+        container_name: mautrix-telegram
+        image: "dock.mau.dev/mautrix/telegram:latest"
+        ports:
+            - "29317:29317"
+        volumes:
+            - "./mautrix-telegram:/data"
+        networks: ["server"]
+        depends_on:
+            - postgresql
+            - synapse
+
+    instagram-bridge:
+        container_name: mautrix-instagram
+        image: "dock.mau.dev/mautrix/instagram:latest"
+        volumes:
+            - "./mautrix-instagram:/data"
+        networks: ["server"]
+        depends_on:
+            - postgresql
+            - synapse
+
+   whatsapp-bridge:
+       container_name: mautrix-whatsapp
+       image: "dock.mau.dev/mautrix/whatsapp:latest"
+       volumes:
+           - "./mautrix-whatsapp:/data"
+       networks: ["server"]
+       depends_on:
+           - postgresql
+           - synapse
+#
+#    mattermost-bridge:
+#        build: mattermost-bridge/mattermost
+#        volumes:
+#            - "./mattermost-bridge/data"
+
+
+volumes:
+    postgresdata:
+    certs:
+    vhost:
+    html:
+
+networks:
+    server:
+        external: true
+

@@ -1,0 +1,12 @@
+id: whatsapp
+url: http://whatsapp-bridge:29318
+as_token: c7ZLSuQPqNvlZnAQVA5ioKAvZjub6sP96PLW3Aaolo7aGaiYoVCU6SSWHjzxMr3X
+hs_token: f73JzmZX2MO7uZbVKHKfMhQD2eS6mzIyzaZrruP3vNUGTmCj49O0AWyDPhPa3y3V
+sender_localpart: RS1sN9lfk7Q3UmyDj8rrIecuS0KJKmnW
+rate_limited: false
+namespaces:
+  users:
+  - regex: ^@whatsapp_[0-9]+:matrix.kanopeld.org$
+    exclusive: true
+  - regex: ^@whatsappbot:matrix.kanopeld.org$
+    exclusive: true

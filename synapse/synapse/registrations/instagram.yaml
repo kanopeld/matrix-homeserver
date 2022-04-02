@@ -1,0 +1,13 @@
+id: instagram
+as_token: 4bo1rakBLka610D4NtI0QQHFFMcUIzs9n2Rq-a0guNnpxhQUPG3NJ00oHqc0GtAR
+hs_token: XqL7_WQKVDQwAsUoUZtSjMq1MIR9Tr63seT0Bovgiev6lN2EIDIUcEZRB-NL_UqS
+namespaces:
+    users:
+    - exclusive: true
+      regex: '@instagram_.*:matrix\.kanopeld\.org'
+    - exclusive: true
+      regex: '@instagrambot:matrix\.kanopeld\.org'
+    aliases: []
+url: http://instagram-bridge:29330
+sender_localpart: dtiSWQLd4NOZ9-Sp8XUudtigjP2Z-0ak1UJ6c6ej9YSDKGBGITwwVle8ZQSAjYfB
+rate_limited: false

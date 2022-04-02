@@ -1,0 +1,15 @@
+id: telegram
+as_token: 3l9bnewjfnndPEf_Qjhb_FXDy959ashC8C34ftAv075o93FNeQCnC0HkjPsijrfy
+hs_token: jLya5iAVL1vfYImPVfdP1iRioZDcOWyfs6XmxVUYkXmzwcmJdzV2XCcUdC5fpXKg
+namespaces:
+    users:
+    - exclusive: true
+      regex: '@telegram_.*:matrix\.kanopeld\.org'
+    - exclusive: true
+      regex: '@telegrambot:matrix\.kanopeld\.org'
+    aliases:
+    - exclusive: true
+      regex: \#telegram_.*:matrix\.kanopeld\.org
+url: http://telegram-bridge:29317
+sender_localpart: mEWEbE4vS1jt4igM2lTYvUHYdXxpxwFHaz1cLcqZHjLek6Ol0Zhio2TvDqu0AY2L
+rate_limited: false
