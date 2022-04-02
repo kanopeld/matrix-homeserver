@@ -4,20 +4,21 @@ services:
     proxy:
         image: "jwilder/nginx-proxy"
         container_name: "proxy"
+        restart: "always"
         volumes:
             - "certs:/etc/nginx/certs"
             - "vhost:/etc/nginx/vhost.d"
             - "html:/usr/share/nginx/html"
             - "/run/docker.sock:/tmp/docker.sock:ro"
-        networks: ["server"]
-        restart: "always"
         ports:
             - "80:80"
             - "443:443"
+        networks: ["server"]
 
     letsencrypt:
         image: "jrcs/letsencrypt-nginx-proxy-companion"
         container_name: "letsencrypt"
+        restart: "always"
         volumes:
             - "certs:/etc/nginx/certs"
             - "vhost:/etc/nginx/vhost.d"
@@ -26,18 +27,30 @@ services:
         environment:
             NGINX_PROXY_CONTAINER: "proxy"
         networks: ["server"]
-        restart: "always"
         depends_on: ["proxy"]
 
     postgresql:
-        image: postgres:latest
+        image: "postgres:latest"
         restart: always
-        env_file: .env
         ports:
             - "5432:5432"
         volumes:
             - "postgresdata:/var/lib/postgresql/"
+        env_file:
+            - ".env"
         networks: ["server"]
+
+    postfix:
+        image: "danilsmirnov/postfix:latest"
+        restart: "always"
+#        volumes:
+#            - "/path/to/certs:/etc/postfix/certs"
+#            - "/path/to/script:/configure.sh"
+#        ports:
+#            - "25:25"
+#            - "587:587" #ssl
+        env_file:
+            -   ".env"
 
     synapse:
         image: "matrixdotorg/synapse:latest"
@@ -46,7 +59,8 @@ services:
             - "./synapse:/data"
             - "./data/media_store:/media"
             - "./data/logs:/logs"
-        env_file: .env
+        env_file:
+            - ".env"
         networks: ["server"]
         depends_on:
             - postgresql
@@ -54,8 +68,8 @@ services:
             - letsencrypt
         
     telegram-bridge:
-        container_name: mautrix-telegram
         image: "dock.mau.dev/mautrix/telegram:latest"
+        container_name: mautrix-telegram
         ports:
             - "29317:29317"
         volumes:
@@ -66,8 +80,8 @@ services:
             - synapse
 
     instagram-bridge:
-        container_name: mautrix-instagram
         image: "dock.mau.dev/mautrix/instagram:latest"
+        container_name: mautrix-instagram
         volumes:
             - "./mautrix-instagram:/data"
         networks: ["server"]
@@ -76,8 +90,8 @@ services:
             - synapse
 
    whatsapp-bridge:
-       container_name: mautrix-whatsapp
        image: "dock.mau.dev/mautrix/whatsapp:latest"
+       container_name: mautrix-whatsapp
        volumes:
            - "./mautrix-whatsapp:/data"
        networks: ["server"]
@@ -90,7 +104,6 @@ services:
 #        volumes:
 #            - "./mattermost-bridge/data"
 
-
 volumes:
     postgresdata:
     certs:
@@ -100,4 +113,3 @@ volumes:
 networks:
     server:
         external: true
-
