@@ -3,7 +3,6 @@ version: "3.3"
 services:
     proxy:
         image: "jwilder/nginx-proxy"
-        container_name: "proxy"
         restart: "always"
         volumes:
             - "certs:/etc/nginx/certs"
@@ -17,7 +16,6 @@ services:
 
     letsencrypt:
         image: "jrcs/letsencrypt-nginx-proxy-companion"
-        container_name: "letsencrypt"
         restart: "always"
         volumes:
             - "certs:/etc/nginx/certs"
@@ -69,7 +67,6 @@ services:
         
     telegram-bridge:
         image: "dock.mau.dev/mautrix/telegram:latest"
-        container_name: mautrix-telegram
         ports:
             - "29317:29317"
         volumes:
@@ -81,7 +78,6 @@ services:
 
     instagram-bridge:
         image: "dock.mau.dev/mautrix/instagram:latest"
-        container_name: mautrix-instagram
         volumes:
             - "./mautrix-instagram:/data"
         networks: ["server"]
@@ -89,20 +85,26 @@ services:
             - postgresql
             - synapse
 
-   whatsapp-bridge:
-       image: "dock.mau.dev/mautrix/whatsapp:latest"
-       container_name: mautrix-whatsapp
-       volumes:
-           - "./mautrix-whatsapp:/data"
-       networks: ["server"]
-       depends_on:
-           - postgresql
-           - synapse
-#
-#    mattermost-bridge:
-#        build: mattermost-bridge/mattermost
-#        volumes:
-#            - "./mattermost-bridge/data"
+    whatsapp-bridge:
+        image: "dock.mau.dev/mautrix/whatsapp:latest"
+        volumes:
+            - "./mautrix-whatsapp:/data"
+        networks: ["server"]
+        depends_on:
+            - postgresql
+            - synapse
+
+    mattermost-bridge:
+        build:
+            context: ./mattermost-bridge
+            dockerfile: Dockerfile
+        container_name: mattermost-bridge
+        volumes:
+            - "./mattermost-bridge:/data"
+        networks: [ "server" ]
+        depends_on:
+            - postgresql
+            - synapse
 
 volumes:
     postgresdata:

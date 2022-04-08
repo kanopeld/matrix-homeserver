@@ -1308,7 +1308,7 @@ allow_guest_access: false
 # (By default, no suggestion is made, so it is left up to the client.
 # This setting is ignored unless public_baseurl is also explicitly set.)
 #
-#default_identity_server: https://matrix.org
+default_identity_server: https://matrix.org
 
 # Handle threepid (email/phone etc) registration and password resets through a set of
 # *trusted* identity servers. Note that this allows the configured identity server to
@@ -1341,7 +1341,7 @@ account_threepid_delegates:
 #
 # Does not apply to server administrators. Defaults to 'true'
 #
-enable_set_displayname: false
+enable_set_displayname: true
 
 # Whether users are allowed to change their avatar after it has been
 # initially set. Useful when provisioning users based on the contents
@@ -1349,7 +1349,7 @@ enable_set_displayname: false
 #
 # Does not apply to server administrators. Defaults to 'true'
 #
-#enable_set_avatar_url: false
+enable_set_avatar_url: true
 
 # Whether users can change the 3PIDs associated with their accounts
 # (email address and msisdn).
