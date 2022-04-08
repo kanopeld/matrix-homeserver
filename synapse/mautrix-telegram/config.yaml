@@ -140,7 +140,7 @@ bridge:
     # synced when they send messages. The maximum is 10000, after which the Telegram server
     # will not send any more members.
     # -1 means no limit (which means it's limited to 10000 by the server)
-    max_initial_member_sync: 16
+    max_initial_member_sync: 8
     # Whether or not to sync the member list in channels.
     # If no channel admins have logged into the bridge, the bridge won't be able to sync the member
     # list regardless of this setting.
@@ -152,15 +152,15 @@ bridge:
     startup_sync: true
     # Number of most recently active dialogs to check when syncing chats.
     # Set to 0 to remove limit.
-    sync_update_limit: 0
+    sync_update_limit: 16
     # Number of most recently active dialogs to create portals for when syncing chats.
     # Set to 0 to remove limit.
-    sync_create_limit: 30
+    sync_create_limit: 16
     # Whether or not to sync and create portals for direct chats at startup.
     sync_direct_chats: true
     # The maximum number of simultaneous Telegram deletions to handle.
     # A large number of simultaneous redactions could put strain on your homeserver.
-    max_telegram_delete: 10
+    max_telegram_delete: 8
     # Whether or not to automatically sync the Matrix room state (mostly unpuppeted displaynames)
     # at startup and when creating a bridge.
     sync_matrix_state: true
@@ -199,16 +199,16 @@ bridge:
     invite_link_resolve: false
     # Use inline images instead of a separate message for the caption.
     # N.B. Inline images are not supported on all clients (e.g. Element iOS/Android).
-    inline_images: false
+    inline_images: true
     # Maximum size of image in megabytes before sending to Telegram as a document.
-    image_as_file_size: 10
+    image_as_file_size: 24
     # Maximum number of pixels in an image before sending to Telegram as a document. Defaults to 1280x1280 = 1638400.
     image_as_file_pixels: 1638400
     # Enable experimental parallel file transfer, which makes uploads/downloads much faster by
     # streaming from/to Matrix and using many connections for Telegram.
     # Note that generating HQ thumbnails for videos is not possible with streamed transfers.
     # This option uses internal Telethon implementation details and may break with minor updates.
-    parallel_file_transfer: false
+    parallel_file_transfer: true
     # Whether or not created rooms should have federation enabled.
     # If false, created portal rooms will never be federated.
     federate_rooms: true
@@ -409,7 +409,7 @@ bridge:
         private_chat:
             # List of users to invite to the portal when someone starts a private chat with the bot.
             # If empty, private chats with the bot won't create a portal.
-            invite: ['@kanopeld:matrix.kanopeld.org']
+            invite: []
             # Whether or not to bridge state change messages in relaybot private chats.
             state_changes: true
             # When private_chat_invite is empty, this message is sent to users /starting the
