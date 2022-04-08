@@ -1,5 +1,4 @@
 version: "3.3"
-
 services:
     proxy:
         image: "jwilder/nginx-proxy"
@@ -27,7 +26,8 @@ services:
         environment:
             NGINX_PROXY_CONTAINER: "proxy"
         networks: ["server"]
-        depends_on: ["proxy"]
+        depends_on:
+            - proxy 
 
     postgresql:
         image: "postgres:latest"
@@ -89,15 +89,15 @@ services:
             - postgresql
             - synapse
 
-   whatsapp-bridge:
-       image: "dock.mau.dev/mautrix/whatsapp:latest"
-       container_name: mautrix-whatsapp
-       volumes:
-           - "./mautrix-whatsapp:/data"
-       networks: ["server"]
-       depends_on:
-           - postgresql
-           - synapse
+    whatsapp-bridge:
+        image: "dock.mau.dev/mautrix/whatsapp:latest"
+        container_name: mautrix-whatsapp
+        volumes:
+            - "./mautrix-whatsapp:/data"
+        networks: ["server"]
+        depends_on:
+            - postgresql
+            - synapse
 #
 #    mattermost-bridge:
 #        build: mattermost-bridge/mattermost
