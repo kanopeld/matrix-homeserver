@@ -25,7 +25,8 @@ services:
         environment:
             NGINX_PROXY_CONTAINER: "proxy"
         networks: ["server"]
-        depends_on: ["proxy"]
+        depends_on:
+            - proxy
 
     postgresql:
         image: "postgres:latest"
