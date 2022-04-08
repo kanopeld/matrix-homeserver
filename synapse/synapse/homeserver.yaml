@@ -449,7 +449,7 @@ limit_remote_rooms:
 # Note that user avatar changes will not work if this is set without
 # using Synapse's media repository.
 #
-max_avatar_size: 2M
+max_avatar_size: 16M
 
 # The MIME types allowed for user avatars. Defaults to no restriction.
 #

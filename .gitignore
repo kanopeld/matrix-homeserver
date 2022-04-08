@@ -1,3 +1,5 @@
 .idea
 .env
 !.env.example
+data/logs
+data/media_store

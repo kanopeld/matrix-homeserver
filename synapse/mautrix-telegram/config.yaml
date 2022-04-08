@@ -63,7 +63,7 @@ appservice:
         # Whether or not the provisioning API should be enabled.
         enabled: true
         # The prefix to use in the provisioning API endpoints.
-        prefix: /_matrix/provision/v1
+        prefix: /_matrix/provision
         # The shared secret to authorize users of the API.
         # Set to "generate" to generate and save a new token.
         shared_secret: QUezmCKoH-wqEDwtXOZNOeasHVtSBRpy7yMwK8TE0g0EeXhK6Uv2kv6DMGgVBUrL
@@ -130,7 +130,7 @@ bridge:
     - full name
     - username
     - phone number
-    displayname_max_length: 100
+    displayname_max_length: 256
     # Remove avatars from Telegram ghost users when removed on Telegram. This is disabled by default
     # as there's no way to determine whether an avatar is removed or just hidden from some users. If
     # you're on a single-user instance, this should be safe to enable.
@@ -140,7 +140,7 @@ bridge:
     # synced when they send messages. The maximum is 10000, after which the Telegram server
     # will not send any more members.
     # -1 means no limit (which means it's limited to 10000 by the server)
-    max_initial_member_sync: 100
+    max_initial_member_sync: 16
     # Whether or not to sync the member list in channels.
     # If no channel admins have logged into the bridge, the bridge won't be able to sync the member
     # list regardless of this setting.
@@ -157,7 +157,7 @@ bridge:
     # Set to 0 to remove limit.
     sync_create_limit: 30
     # Whether or not to sync and create portals for direct chats at startup.
-    sync_direct_chats: false
+    sync_direct_chats: true
     # The maximum number of simultaneous Telegram deletions to handle.
     # A large number of simultaneous redactions could put strain on your homeserver.
     max_telegram_delete: 10
