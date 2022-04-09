@@ -9,4 +9,4 @@ Including:
 * telegram-bridge
 * whatsapp-bridge
 * instagram-bridge
-* ?mattermost-bridge?
+* mattermost-bridge
