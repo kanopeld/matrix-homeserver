@@ -1,7 +1,4 @@
 .idea
 .env
 !.env.example
-data/logs/*
-!data/logs/samplelog
-data/media_store
-!data/media_store/samplemedia
+data
